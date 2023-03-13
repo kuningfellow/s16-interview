@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"flag"
 	"fmt"
 	"net/http"
@@ -39,13 +40,11 @@ func run(stopChan <-chan os.Signal) error {
 		Handler: r,
 	}
 
-	errChan := make(chan error, 1)
 	go func() {
-		errChan <- srv.ListenAndServe()
-		// if err != nil {
-		// 	fmt.Println(err)
-		// 	os.Exit(1)
-		// }
+		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	}()
 
 	<-stopChan
