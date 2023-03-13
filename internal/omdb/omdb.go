@@ -10,6 +10,7 @@ var (
 	ErrorNotFound      = errors.New("not found")
 	ErrorServerError   = errors.New("server error")
 	ErrorEmptyResponse = errors.New("empty response")
+	ErrorInternal      = errors.New("internal error")
 )
 
 // OMDB is an OMDB client

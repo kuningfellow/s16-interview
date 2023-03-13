@@ -27,12 +27,7 @@ func (o *OMDBHTTP) Search(ctx context.Context, req omdb.SearchRequest) (*omdb.Se
 		return nil, err
 	}
 
-	resp, err := o.RoundTrip(httpreq)
-	if err != nil {
-		return nil, err
-	} else if resp == nil {
-		return nil, omdb.ErrorEmptyResponse
-	}
+	resp, err := handleResponseError(o.RoundTrip(httpreq))
 
 	body, err := readAndClose(resp.Body)
 	if err != nil {
