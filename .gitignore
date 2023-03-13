@@ -1,0 +1,7 @@
+# ignore files without extensions
+*
+!/**/
+!*.*
+
+# ignore bin folder
+bin/
